@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noLib": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "plugins": [],
+    "target": "esnext",
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}
