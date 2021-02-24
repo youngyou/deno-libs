@@ -1,9 +1,9 @@
 {
-  "name": "deno-project",
+  "name": "deno-lib",
   "version": "1.0.0",
   "scripts": {
     "start": "ls **/*.ts | NODE_ENV=development entr -r -d deno run --allow-net --allow-env --unstable index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "deno test --allow-net --unstable **/*.test.ts"
   },
   "author": "Keyon U"
 }
