@@ -58,7 +58,7 @@ test({
       if (payload) {
         ctx.state.jwt = payload;
       } else {
-        ctx.response.status = 401
+        ctx.response.status = 401;
       }
     })(mockContext, mockNext);
     assertEquals(mockContext.response.status === 401, true);
