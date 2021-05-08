@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase
 
-import { decode, AES } from "../../deps.ts";
+import { AES, decode } from "../../deps.ts";
 import { parse } from "../../utils/xml.ts";
 import { Utf8ArrayToString, verify } from "./utils.ts";
 
@@ -30,18 +30,18 @@ type ChangeExternalContactEventBase<Type, Data = any> = EventBase & {
 
 export type ChangeExternalContactEvent =
   | ChangeExternalContactEventBase<
-      "add_external_contact" | "add_half_external_contact",
-      { WelcomeCode: string; State: string }
-    > // 添加企业客户事件 | 外部联系人免验证添加成员事件
+    "add_external_contact" | "add_half_external_contact",
+    { WelcomeCode: string; State: string }
+  > // 添加企业客户事件 | 外部联系人免验证添加成员事件
   | ChangeExternalContactEventBase<
-      "edit_external_contact" | "del_external_contact" | "del_follow_user"
-    > // 编辑企业客户事件 | 删除企业客户事件 | 删除跟进成员事件
+    "edit_external_contact" | "del_external_contact" | "del_follow_user"
+  > // 编辑企业客户事件 | 删除企业客户事件 | 删除跟进成员事件
   | ChangeExternalContactEventBase<
-      "transfer_fail",
-      {
-        FailReason: "customer_refused" | "customer_limit_exceed"; // 客户拒绝 | 接替成员的客户数达到上限
-      }
-    >; // 客户接替失败事件
+    "transfer_fail",
+    {
+      FailReason: "customer_refused" | "customer_limit_exceed"; // 客户拒绝 | 接替成员的客户数达到上限
+    }
+  >; // 客户接替失败事件
 
 // 客户群创建事件 | 客户群变更事件 | 客户群解散事件
 export type ChangeExternalChatEvent = EventBase & {
@@ -68,14 +68,14 @@ class WxWorkEventReceiver {
     signature: string,
     encryptMsg: string,
     nonce: number | string,
-    timestamp: number | string
+    timestamp: number | string,
   ) {
     return verify(
       signature,
       this.token,
       encryptMsg,
       String(nonce),
-      String(timestamp)
+      String(timestamp),
     );
   }
   private parseLength(bytes: Uint8Array) {

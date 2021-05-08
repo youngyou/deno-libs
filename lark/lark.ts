@@ -48,7 +48,7 @@ class LarkApp {
           app_id: this.app_id,
           app_secret: this.app_secret,
         }),
-      }
+      },
     );
     return res;
   }
@@ -64,7 +64,7 @@ class LarkApp {
           app_access_token,
           code,
         }),
-      }
+      },
     );
     return res.data;
   }
@@ -75,7 +75,7 @@ class LarkApp {
         headers: {
           Authorization: `Bearer ${user_access_token}`,
         },
-      }
+      },
     );
   }
 }

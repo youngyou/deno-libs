@@ -4,12 +4,19 @@
  * @param timeKey
  */
 export function cache(timeKey: string | number = "expires_in") {
-  return function (_target: Object, _propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (
+    _target: Object,
+    _propertyKey: string,
+    descriptor: PropertyDescriptor,
+  ) {
     const oldFun = descriptor.value;
     let value: any = null;
     let next = -1;
 
-    descriptor.value = async function (this: Object, ...args: any[]): Promise<any> {
+    descriptor.value = async function (
+      this: Object,
+      ...args: any[]
+    ): Promise<any> {
       const now = +new Date();
       if (now < next) return value;
       const res = await oldFun.apply(this, args);

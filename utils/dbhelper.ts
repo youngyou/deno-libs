@@ -1,9 +1,16 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { Client, ClientConfig, configLogger, ExecuteResult, Logger, TransactionProcessor } from "../deps.ts";
+import {
+  Client,
+  ClientConfig,
+  configLogger,
+  ExecuteResult,
+  Logger,
+  TransactionProcessor,
+} from "../deps.ts";
 
 const logger = new Logger({
-  format: "DB ==> %s"
+  format: "DB ==> %s",
 });
 
 export default class DBHelper {

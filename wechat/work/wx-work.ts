@@ -9,7 +9,7 @@ class WxWorkApp {
   @cache("expires_in")
   async getToken() {
     const res = await request<{ access_token: string; expires_in: number }>(
-      `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${this.corpId}&corpsecret=${this.secret}`
+      `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${this.corpId}&corpsecret=${this.secret}`,
     );
     return res;
   }

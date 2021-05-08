@@ -18,9 +18,13 @@ function jwt(secret: string, alg: Algorithm = "HS512") {
   }
 
   function middleware<T extends Payload = Payload>(
-    fun: (payload: T | null, ctx: Context, next: () => Promise<void>) => void,
+    fun: (
+      payload: T | null,
+      ctx: Context,
+      next: () => Promise<unknown>,
+    ) => void,
   ): Middleware {
-    return async function (ctx: Context, next: () => Promise<void>) {
+    return async function (ctx: Context, next: () => Promise<unknown>) {
       const authHeader = ctx.request.headers.get("Authorization")!;
       let payload = null;
       if (authHeader && authHeader.startsWith("Bearer ")) {

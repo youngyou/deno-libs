@@ -2,7 +2,7 @@
 
 import { cache } from "../../utils/decorators.ts";
 import request from "../../utils/request.ts";
-import { Sha1, nanoid } from "../../deps.ts";
+import { nanoid, Sha1 } from "../../deps.ts";
 
 interface GetToken {
   access_token: string;
@@ -41,7 +41,7 @@ class WxMp {
   @cache("expires_in")
   async getToken() {
     return await request<GetToken>(
-      `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${this.appid}&secret=${this.secret}`
+      `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${this.appid}&secret=${this.secret}`,
     );
   }
   /**
@@ -51,7 +51,7 @@ class WxMp {
   async getJsTicket() {
     const { access_token } = await this.getToken();
     return await request<GetJsTicket>(
-      `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${access_token}&type=jsapi`
+      `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${access_token}&type=jsapi`,
     );
   }
   /**
@@ -60,7 +60,7 @@ class WxMp {
    */
   async getAccessToken(code: string) {
     const res = await request<GetAccessToken>(
-      `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${this.appid}&secret=${this.secret}&code=${code}&grant_type=authorization_code`
+      `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${this.appid}&secret=${this.secret}&code=${code}&grant_type=authorization_code`,
     );
     return res;
   }
@@ -71,7 +71,7 @@ class WxMp {
    */
   async getUserInfo(openid: string, access_token: string) {
     const userinfo = await request<GetUserInfo>(
-      `https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`
+      `https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`,
     );
 
     return userinfo;
@@ -85,10 +85,10 @@ class WxMp {
       noncestr,
       jsapi_ticket: ticket,
       timestamp,
-      url: url.split("#")[0]
+      url: url.split("#")[0],
     };
     const str = Object.keys(obj)
-      .map(k => `${k}=${obj[k]}`)
+      .map((k) => `${k}=${obj[k]}`)
       .sort()
       .join("&");
     console.log(str);
@@ -97,7 +97,7 @@ class WxMp {
     return {
       nonceStr: noncestr,
       timestamp,
-      signature
+      signature,
     };
   }
 }

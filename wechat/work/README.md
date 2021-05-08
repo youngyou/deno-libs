@@ -3,7 +3,6 @@
 ## demo
 
 ```typescript
-
 const app = new WxMiniApp("APP_ID", "SECRET");
 
 router.post("/auth", async (context) => {
@@ -21,7 +20,6 @@ router.post("/auth", async (context) => {
 ## 通知回调
 
 ```typescript
-
 const evReceiver = new WxWorkEventReceiver("TOKEN", "AES_KEY");
 const app = new WxWorkApp("CORPID", "secret");
 

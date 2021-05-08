@@ -13,8 +13,7 @@
     "resolveJsonModule": true,
     "plugins": [],
     "target": "esnext",
+    "lib": ["ESNext"]
   },
-  "include": [
-    "./**/*.ts"
-  ]
+  "include": ["./**/*.ts"]
 }

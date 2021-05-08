@@ -22,7 +22,7 @@ class WxMiniApp {
   @cache("expires_in")
   async getToken() {
     return await request<GetToken>(
-      `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${this.appid}&secret=${this.secret}`
+      `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${this.appid}&secret=${this.secret}`,
     );
   }
   /**
@@ -31,7 +31,7 @@ class WxMiniApp {
    */
   async code2Session(js_code: string) {
     return await request<GetCode2Session>(
-      `https://api.weixin.qq.com/sns/jscode2session?appid=${this.appid}&secret=${this.secret}&js_code=${js_code}&grant_type=authorization_code`
+      `https://api.weixin.qq.com/sns/jscode2session?appid=${this.appid}&secret=${this.secret}&js_code=${js_code}&grant_type=authorization_code`,
     );
   }
   // async getSchema() {

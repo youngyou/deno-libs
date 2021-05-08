@@ -3,7 +3,6 @@
 ## demo
 
 ```typescript
-
 const app = new WxMiniApp("APP_ID", "SECRET");
 
 router.post("/auth", async (context) => {

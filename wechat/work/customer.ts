@@ -38,11 +38,19 @@ interface AddContactWayFullParams {
   conclusions?: string; // 结束语，会话结束时自动发送给客户，可参考“结束语定义”，仅在is_temp为true时有效
 }
 
-type AddContactWayParams = Omit<
-  AddContactWayFullParams,
-  "type" | "is_temp" | "expires_in" | "chat_expires_in" | "unionid" | "conclusions" | "party" | "user"
-> &
-  ({ user: string[] } | { party: string });
+type AddContactWayParams =
+  & Omit<
+    AddContactWayFullParams,
+    | "type"
+    | "is_temp"
+    | "expires_in"
+    | "chat_expires_in"
+    | "unionid"
+    | "conclusions"
+    | "party"
+    | "user"
+  >
+  & ({ user: string[] } | { party: string });
 
 interface ExternalContact {
   external_userid: string; // 外部联系人的userid
@@ -67,7 +75,7 @@ interface ExternalContact {
         tag_name: string; // 该成员添加此外部联系人所打标签名称
         tag_id: string; // 该成员添加此外部联系人所打企业标签的id，仅企业设置（type为1）的标签返回
         type: 1 | 2; // 该成员添加此外部联系人所打标签类型, 1-企业设置, 2-用户自定义
-      }
+      },
     ];
     remark_corp_name: string; // 该成员对此客户备注的企业名称
     remark_mobiles: string[]; // 该成员对此客户备注的手机号码，第三方不可获取
@@ -85,14 +93,18 @@ interface ExternalContact {
  * @param code
  * @param params
  */
-export async function sendWelcome(this: WxWorkApp, code: string, params: SendWelcomeParams) {
+export async function sendWelcome(
+  this: WxWorkApp,
+  code: string,
+  params: SendWelcomeParams,
+) {
   const { access_token } = await this.getToken();
   const res = await request(
     `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/send_welcome_msg?debug=1&access_token=${access_token}`,
     {
       method: "POST",
-      body: JSON.stringify({ welcome_code: code, ...params })
-    }
+      body: JSON.stringify({ welcome_code: code, ...params }),
+    },
   );
   return res;
 }
@@ -101,7 +113,7 @@ export async function getFollowUserList(this: WxWorkApp) {
   const { access_token } = await this.getToken();
   return (
     await request<{ follow_user: string[] }>(
-      `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_follow_user_list?access_token=${access_token}`
+      `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_follow_user_list?access_token=${access_token}`,
     )
   ).follow_user;
 }
@@ -110,15 +122,21 @@ export async function getFollowUserList(this: WxWorkApp) {
  * 配置客户联系「联系我」方式
  * @param params
  */
-export async function addContactWay(this: WxWorkApp, params: AddContactWayParams) {
+export async function addContactWay(
+  this: WxWorkApp,
+  params: AddContactWayParams,
+) {
   const { access_token } = await this.getToken();
-  return await request(`https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_contact_way?access_token=${access_token}`, {
-    method: "POST",
-    body: JSON.stringify({
-      type: 2, // 联系方式类型,1-单人, 2-多人
-      ...params
-    })
-  });
+  return await request(
+    `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_contact_way?access_token=${access_token}`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        type: 2, // 联系方式类型,1-单人, 2-多人
+        ...params,
+      }),
+    },
+  );
 }
 
 /**
@@ -130,10 +148,13 @@ export async function getContactWay(this: WxWorkApp, configId: string) {
   const { access_token } = await this.getToken();
   return await request<{
     contact_way: AddContactWayFullParams & { config_id: string };
-  }>(`https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_contact_way?access_token=${access_token}`, {
-    method: "POST",
-    body: JSON.stringify({ config_id: configId })
-  });
+  }>(
+    `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_contact_way?access_token=${access_token}`,
+    {
+      method: "POST",
+      body: JSON.stringify({ config_id: configId }),
+    },
+  );
 }
 /**
  * 获取企业已配置的「联系我」方式
@@ -142,26 +163,32 @@ export async function getContactWay(this: WxWorkApp, configId: string) {
  */
 export async function delContactWay(this: WxWorkApp, configId: string) {
   const { access_token } = await this.getToken();
-  return await request(`https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_contact_way?access_token=${access_token}`, {
-    method: "POST",
-    body: JSON.stringify({ config_id: configId })
-  });
+  return await request(
+    `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_contact_way?access_token=${access_token}`,
+    {
+      method: "POST",
+      body: JSON.stringify({ config_id: configId }),
+    },
+  );
 }
 /**
  * 获取客户详情
  * @param externalUserid
  */
-export async function getExternalContact(this: WxWorkApp, externalUserid: string) {
+export async function getExternalContact(
+  this: WxWorkApp,
+  externalUserid: string,
+) {
   const { access_token } = await this.getToken();
   return await request<ExternalContact>(
-    `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=${access_token}&external_userid=${externalUserid}`
+    `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=${access_token}&external_userid=${externalUserid}`,
   );
 }
 
 export async function getExternalContactList(this: WxWorkApp, userid: string) {
   const { access_token } = await this.getToken();
   return await request<{ external_userid: string[] }>(
-    `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/list?access_token=${access_token}&userid=${userid}`
+    `https://qyapi.weixin.qq.com/cgi-bin/externalcontact/list?access_token=${access_token}&userid=${userid}`,
   );
 }
 
@@ -174,6 +201,6 @@ export async function getUserList(this: WxWorkApp, department_id: number) {
   const { access_token } = await this.getToken();
   // deno-lint-ignore no-explicit-any
   return await request<any>(
-    `https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=${access_token}&department_id=${department_id}&fetch_child=1`
+    `https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=${access_token}&department_id=${department_id}&fetch_child=1`,
   );
 }

@@ -28,7 +28,7 @@ test({
       async (
         payload: Payload | null,
         ctx: Context,
-        next: () => Promise<void>,
+        next: () => Promise<unknown>,
       ) => {
         if (payload) {
           ctx.state.jwt = payload;

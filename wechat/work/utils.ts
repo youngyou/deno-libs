@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 import { Logger } from "../../utils/logger.ts";
-import { Sha1 } from '../../deps.ts';
+import { Sha1 } from "../../deps.ts";
 
 const logger = new Logger();
 
