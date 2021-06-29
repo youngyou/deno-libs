@@ -10,8 +10,8 @@ export type { Algorithm } from "https://deno.land/x/djwt@v2.2/algorithm.ts";
 export type {
   Middleware,
   RouterMiddleware,
-} from "https://deno.land/x/oak@v7.4.0/mod.ts";
-export { Context } from "https://deno.land/x/oak@v7.4.0/mod.ts";
+} from "https://deno.land/x/oak@v7.7.0/mod.ts";
+export { Context } from "https://deno.land/x/oak@v7.7.0/mod.ts";
 
 export { Sha1 } from "https://deno.land/std@0.82.0/hash/sha1.ts";
 export { decode } from "https://deno.land/std@0.82.0/encoding/base64.ts";
